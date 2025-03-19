@@ -16,8 +16,8 @@ import org.junit.runner.RunWith;
         },
         monochrome = true,
         features = "./src/test/resources/features",
-        glue = {"stepdefinitions", "hooks"},
-        tags = "@hepsiburada",
+        glue = {"stepdefinitions","hooks"},
+        tags = "@tc03",
         dryRun = false
 
 )

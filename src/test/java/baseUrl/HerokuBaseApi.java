@@ -1,22 +1,24 @@
 package baseUrl;
 
+
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import org.testng.annotations.BeforeMethod;
 
 
 public class HerokuBaseApi {
 
-    protected RequestSpecification specHeroku;
+    public static RequestSpecification spec;
 
-    @BeforeMethod
-    public void setUp() {
-        specHeroku =new RequestSpecBuilder()
-                .setAccept(ContentType.JSON)
-                .addHeader("Accept","application/json")
-                .setBaseUri("https://restful-booker.herokuapp.com/").build();
+
+    public static  void setUp() {
+        spec = new RequestSpecBuilder()
+                .setBaseUri("https://restful-booker.herokuapp.com/").
+               setContentType(ContentType.JSON).
+                build();
     }
+
+
 
 
 }

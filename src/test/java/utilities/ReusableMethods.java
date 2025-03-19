@@ -1,5 +1,6 @@
 package utilities;
 
+import io.restassured.response.Response;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -11,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
+
+import static io.restassured.RestAssured.given;
 
 public class ReusableMethods {
     public static String getScreenshot(String name) throws IOException {
@@ -207,4 +210,20 @@ public class ReusableMethods {
         }
         return newHandle;
     }
+
+
+    public static Response createToken(String username, String password) {
+        HashMap<String, String> authBody = new HashMap<>();
+        authBody.put("username", username);
+        authBody.put("password", password);
+
+        return  given().
+                when().
+                body(authBody).
+                header("Content-Type","application/json").
+                post(ConfigReader.getProperty("auth"));
+
+    }
+
+
 }
