@@ -217,13 +217,18 @@ public class ReusableMethods {
         authBody.put("username", username);
         authBody.put("password", password);
 
-        return  given().
+        return given().
                 when().
                 body(authBody).
-                header("Content-Type","application/json").
+                header("Content-Type", "application/json").
                 post(ConfigReader.getProperty("auth"));
 
     }
 
+    public static WebElement waitAndClick(WebElement we) {
+        waitForVisibility(we, 5);
+        we.click();
+        return we;
+    }
 
 }

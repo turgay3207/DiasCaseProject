@@ -1,5 +1,6 @@
 package utilities;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,10 +15,13 @@ public class Driver {
     private static WebDriver driver;
     //getDriver() is used to instantiate the driver object
     public static WebDriver getDriver(){
+        ChromeOptions options = new ChromeOptions();
+        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        options.addArguments("--disable-notifications");
         if (driver==null){
             switch (ConfigReader.getProperty("browser")) {
                 case "chrome":
-                    driver = new ChromeDriver();
+                    driver = new ChromeDriver(options);
                     break;
                 case "firefox":
                     driver = new FirefoxDriver();
