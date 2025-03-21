@@ -17,19 +17,15 @@ import static io.restassured.RestAssured.given;
 
 public class ReusableMethods {
     public static String getScreenshot(String name) throws IOException {
-//        THIS METHOD TAKES SCREENSHOT AND STORE IN /test-output FOLDER
-//        NAME OF THE SCREEN IS BASED ON THE CURRENT TIME
-//        SO THAN WE CAN HAVE UNIQUE NAME
-        // naming the screenshot with the current date to avoid duplication
+
         String date = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-//        public static final String path = date.toString();
-        // TakesScreenshot is an interface of selenium that takes the screenshot. SAME IS IN THE HOOKS
+
         TakesScreenshot ts = (TakesScreenshot) Driver.getDriver();
         File source = ts.getScreenshotAs(OutputType.FILE);
-        // full path to the screenshot location
+
         String target = System.getProperty("user.dir") + "/test-output/Screenshots/" + name + date + ".png";
         File finalDestination = new File(target);
-        // save the screenshot to the path given
+
         FileUtils.copyFile(source, finalDestination);
         return target;
     }

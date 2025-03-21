@@ -15,16 +15,16 @@ public class Driver {
 
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    // Varsayılan getDriver() metodu, config'den tarayıcıyı alır
+
     public static WebDriver getDriver() {
         return getDriver(ConfigReader.getProperty("browser"));
     }
 
-    // Parametreli getDriver(), XML'den gelen tarayıcı bilgisini kullanır
+
     public static WebDriver getDriver(String browser) {
         if (driver.get() == null) {
             if (browser == null) {
-                browser = ConfigReader.getProperty("browser"); // Eğer XML'den gelmezse config'den al
+                browser = ConfigReader.getProperty("browser"); //
             }
 
             switch (browser.toLowerCase()) {
