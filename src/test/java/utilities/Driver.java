@@ -4,49 +4,61 @@ import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.time.Duration;
 
 public class Driver {
-    private Driver(){}
+    private Driver() {}
 
-    private static WebDriver driver;
-    //getDriver() is used to instantiate the driver object
-    public static WebDriver getDriver(){
-        ChromeOptions options = new ChromeOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        options.addArguments("--disable-notifications");
-        if (driver==null){
-            switch (ConfigReader.getProperty("browser")) {
-                case "chrome":
-                    driver = new ChromeDriver(options);
-                    break;
-                case "firefox":
-                    driver = new FirefoxDriver();
-                    break;
-                case "chrome-headless":
-                    driver = new ChromeDriver(new ChromeOptions().setHeadless(true));
-                    break;
-                case "edge":
-                    driver = new EdgeDriver();
-                    break;
-            }
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-        }
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-        return driver;
+    // Varsayılan getDriver() metodu, config'den tarayıcıyı alır
+    public static WebDriver getDriver() {
+        return getDriver(ConfigReader.getProperty("browser"));
     }
 
-    //closeDriver() is used to close the driver
-    public static void closeDriver(){
-        //if driver is already being used(pointing an object) then quit the driver
-        if (driver!=null){
-            driver.quit();
-            driver=null;
+    // Parametreli getDriver(), XML'den gelen tarayıcı bilgisini kullanır
+    public static WebDriver getDriver(String browser) {
+        if (driver.get() == null) {
+            if (browser == null) {
+                browser = ConfigReader.getProperty("browser"); // Eğer XML'den gelmezse config'den al
+            }
+
+            switch (browser.toLowerCase()) {
+                case "chrome":
+                    ChromeOptions options = new ChromeOptions();
+                    options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                    options.addArguments("--disable-notifications");
+
+
+                    driver.set(new ChromeDriver(options));
+                    break;
+                case "firefox":
+                    FirefoxOptions options1 = new FirefoxOptions();
+                    options1.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                    options1.addArguments("--disable-notifications");
+                    driver.set(new FirefoxDriver(options1));
+                    break;
+                case "edge":
+                    driver.set(new EdgeDriver());
+                    break;
+
+            }
+
+            driver.get().manage().window().maximize();
+            driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+            driver.get().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        }
+        return driver.get();
+    }
+
+    public static void closeDriver() {
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
         }
     }
 }

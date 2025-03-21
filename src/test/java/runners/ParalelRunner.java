@@ -2,6 +2,8 @@ package runners;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import utilities.Driver;
 
 @CucumberOptions(
@@ -21,7 +23,11 @@ import utilities.Driver;
         dryRun = false,
         tags = "@ui"
 )
-public class Runner extends AbstractTestNGCucumberTests {
+public class ParalelRunner extends AbstractTestNGCucumberTests {
 
-
+        @BeforeClass
+       @Parameters("browser")
+        public void setup(String browser) {
+                Driver.getDriver(browser);
+        }
 }

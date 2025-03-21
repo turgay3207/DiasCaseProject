@@ -1,9 +1,12 @@
 package pages;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
+
+import java.util.List;
 
 public class HepsiBuradaPage {
     public HepsiBuradaPage() {
@@ -23,15 +26,33 @@ public class HepsiBuradaPage {
     public WebElement tabletIncBoyutu;
 
 
-    @FindBy(xpath = "//*[@id=\"i27\"]/article/a/div/div[4]/div/div") // //*[@id="i27"]/div/a/div[2]/button         //*[@id="i27"]/article/a/div/div[4]/div/div   //*[@id="i27"]/div/a/div[2]/div[4]
+    @FindBy(xpath = "//*[@id=\"i27\"]/article/a/div/div[4]/div/div")
+    // //*[@id="i27"]/div/a/div[2]/button         //*[@id="i27"]/article/a/div/div[4]/div/div   //*[@id="i27"]/div/a/div[2]/div[4]
     public WebElement urunUzerineGel;
 
-    @FindBy(xpath = "/html[1]/body[1]/div[8]/div[1]/div[1]/div[1]/div[2]/div[2]/button[1]/div[1]")
+    @FindBy(xpath = "//button[@data-test-id='addToCart']")
     public WebElement sepeteEkleButonu;
     @FindBy(xpath = "/html/body/div[6]/div/div/div[2]/div[2]/a") //  /div/div/div[2]/div[1]
     public WebElement sepeteEklendiMesaj;
-    @FindBy(xpath = "//*[@id=\"shoppingCart\"]")
-    public WebElement sepetimButonu;
+    @FindBy(id = "basket_payedPrice")
+    public WebElement sepetFiyati;
+    @FindBy(id = "shoppingCart")
+    public WebElement sepet;
+
+    @FindBy(xpath = "//button[normalize-space()='Sepete git']")
+    public WebElement sepeteGit;
+
+    @FindAll({
+            @FindBy(xpath = "//div[@data-test-id='price-current-price']")
+    })
+    public List<WebElement> currentPrice;
+
+    @FindAll({
+            @FindBy(xpath = "//div[@data-test-id='final-price-1']")
+    })
+    public List<WebElement> currentPrice2;
+
+
 }
 
 

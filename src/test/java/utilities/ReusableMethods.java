@@ -225,10 +225,9 @@ public class ReusableMethods {
 
     }
 
-    public static WebElement waitAndClick(WebElement we) {
-        waitForVisibility(we, 5);
-        we.click();
-        return we;
+    public static void waitAndClick(WebElement we) {
+        waitForVisibility(we, 10);
+        clickWithJS(we);
     }
 
 }

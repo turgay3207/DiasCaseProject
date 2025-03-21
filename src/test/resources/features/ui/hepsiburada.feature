@@ -1,4 +1,4 @@
-@hepsiburada
+@hepsiburada @ui
 Feature: HepsiBurada UI Test
 
   Scenario: TC01 User adds the most expensive Apple 13.2-inch tablet to the cart and verifies price
