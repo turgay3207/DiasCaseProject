@@ -14,5 +14,4 @@ import lombok.ToString;
 public class Root {
     public int bookingid;
     public Booking booking;
-
 }

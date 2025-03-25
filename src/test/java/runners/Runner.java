@@ -19,7 +19,7 @@ import utilities.Driver;
         monochrome = true,
         publish = true,
         dryRun = false,
-        tags = "@ui"  //Ui tagleri:@hepsiburada @ui //// API tagi: @api
+        tags = "@api"  //Ui tagleri:@hepsiburada @ui //// API tagi: @api
 
 )
 public class Runner extends AbstractTestNGCucumberTests {

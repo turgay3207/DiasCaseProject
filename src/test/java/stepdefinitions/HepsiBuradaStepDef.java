@@ -3,24 +3,16 @@ package stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import pages.HepsiBuradaPage;
 import utilities.Driver;
-import utilities.ReusableMethods;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static utilities.ReusableMethods.*;
 
 public class HepsiBuradaStepDef {
@@ -33,24 +25,22 @@ public class HepsiBuradaStepDef {
     String expectedPrice;
 
     @Given("the user navigates to {string}")
-    public void the_user_navigates_to(String string) throws InterruptedException {
+    public void the_user_navigates_to(String string) {
         Driver.getDriver().get(string);
         waitAndClick(hepsiBuradaPage.kabulEtButon);
-      /*  try {
-            // Alert'e switch yap ve kapat
-            Alert alert = Driver.getDriver().switchTo().alert();
-            alert.dismiss(); // Veya alert.accept();
-        } catch (Exception e) {
-            System.out.println("Alert görünmedi, devam ediliyor.");
-        } */
+
     }
 
 
     @When("the user goes to Tum Kategoriler -> Elektronik -> Tablet category")
-    public void theUserGoesToTumKategorilerElektronikTabletCategory() throws InterruptedException {
-        hepsiBuradaPage.elektronikSecenegi.click();
+    public void theUserGoesToTumKategorilerElektronikTabletCategory() {
+
+        actions.moveToElement(hepsiBuradaPage.elektronikSecenegi).perform();
+
         actions.moveToElement(hepsiBuradaPage.bilgisayarTabletSecenegi).perform();
+
         waitAndClick(hepsiBuradaPage.appleSecenegi);
+
 
     }
 
@@ -110,10 +100,10 @@ public class HepsiBuradaStepDef {
 
     @Then("the user verifies that the product is added to the cart")
     public void the_user_verifies_that_the_product_is_added_to_the_cart() {
-        try{
+        try {
             waitAndClick(hepsiBuradaPage.sepeteGit);
-        }catch (Exception e){
-waitAndClick(hepsiBuradaPage.sepet);
+        } catch (Exception e) {
+            waitAndClick(hepsiBuradaPage.sepet);
         }
 
     }
@@ -121,7 +111,7 @@ waitAndClick(hepsiBuradaPage.sepet);
     @Then("the user verifies that the price in the cart matches the product detail page")
     public void the_user_verifies_that_the_price_in_the_cart_matches_the_product_detail_page() {
 
-        assertEquals(expectedPrice.replace(" TL",""), hepsiBuradaPage.sepetFiyati.getText());
+        assertEquals(expectedPrice.replace(" TL", ""), hepsiBuradaPage.sepetFiyati.getText());
     }
 
 }

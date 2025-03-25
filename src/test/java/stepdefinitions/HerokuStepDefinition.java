@@ -1,16 +1,14 @@
 package stepdefinitions;
 
-import baseUrl.HerokuBaseApi;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
-import org.testng.annotations.Test;
+
 import pojo.Booking;
 import pojo.Bookingdates;
 import pojo.Root;
 import utilities.ConfigReader;
 
-import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
 import static baseUrl.HerokuBaseApi.spec;
@@ -26,23 +24,17 @@ public class HerokuStepDefinition {
 
     @Given("User sends a POST request for authentication")
     public void user_sends_a_post_request_for_authentication() {
-
         response = createToken(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
-        response.prettyPrint();
     }
 
     @Then("User verifs that  status code is {int}")
     public void user_verifs_that_status_code_is(Integer statusCode) {
         response.then().statusCode(statusCode);
-
-
     }
 
     @Then("User verifs that token value is not empty")
     public void user_verifs_that_token_value_is_not_empty() {
         assertFalse(response.jsonPath().get("token").toString().isEmpty());
-
-
     }
 
 
@@ -55,32 +47,27 @@ public class HerokuStepDefinition {
                 when().
                 get("/{p1}");
 
-
     }
 
     @Then("User verifs that booking value contains {string}")
     public void user_verifs_that_booking_value_contains(String bookingId) {
         assertTrue(response.jsonPath().get("bookingid").toString().contains(bookingId));
-
     }
 
 
     @Given("User sends a GET request for booking with id {string}")
     public void user_sends_a_get_request_for_booking_with_id(String string) {
-        System.out.println("****************************id = " + id);
         spec.pathParams("p1",
                 "booking"
                 , "p2", id);
         response = given(spec).
                 when().
                 get("/{p1}/{p2}");
-
     }
 
     @Then("User verifs that  firstname is {string}")
     public void user_verifs_that_firstname_is(String name) {
         assertEquals(name, response.jsonPath().get("firstname"));
-
     }
 
     @Then("User verifs that  lastname is {string}")
@@ -104,7 +91,6 @@ public class HerokuStepDefinition {
                 break;
 
         }
-
 
     }
 
@@ -174,8 +160,6 @@ public class HerokuStepDefinition {
 
         String token = "token=" + createToken(ConfigReader.getProperty("username"), ConfigReader.getProperty("password")).
                 jsonPath().getString("token").trim();
-        System.out.println("token = " + token);
-
 
         Bookingdates bookingdates = new Bookingdates("2025-06-06", "2025-07-07");
         expectedData = new Booking("Updated",
